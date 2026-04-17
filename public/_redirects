@@ -1,0 +1,6 @@
+# Force HTTPS — redirects all HTTP traffic to HTTPS
+http://triovatelabs.com/* https://triovatelabs.com/:splat 301!
+http://www.triovatelabs.com/* https://www.triovatelabs.com/:splat 301!
+
+# SPA fallback — all unmatched routes serve index.html so React Router works
+/*  /index.html  200

@@ -1,0 +1,82 @@
+You are a principal frontend engineer with strong layout geometry judgment.
+
+Context:
+We attempted to implement a “white top cap + center bump” like the GoalFest reference.
+The current result is NOT correct:
+- The white area is too tall and feels like a slab
+- The curve feels arbitrary instead of structural
+- The logo looks tiny and floating, not housed
+- The “bump” is not a true medallion-style protrusion
+
+We want this EXACT structural intent:
+1) A shallow, full-width white top bar (like a header band), not a huge white block.
+2) A centered, circular/elliptical “medallion bump” that protrudes downward from that bar.
+3) The logo sits inside that medallion bump, centered.
+4) The bar and bump share the same white fill and feel like a single cutout piece.
+5) The hero background should remain visible immediately below the bar, except where the medallion occupies space.
+
+Goal:
+Make it look like GoalFest: “white header strip + centered badge cutout”, not “white overlay with random curve”.
+
+---
+
+NON-NEGOTIABLE RULES
+- Do NOT use SVG waves/blobs
+- Do NOT use a single giant white overlay covering the hero
+- Do NOT place the logo separately from the bump (logo must be inside the bump container)
+- Keep it responsive and symmetrical
+- Do not introduce new colors
+
+---
+
+IMPLEMENTATION SPEC (FOLLOW THIS)
+Create 2 structural layers inside the hero:
+
+A) Top Cap (white strip)
+- Height: ~72px on mobile, ~96px on desktop (responsive)
+- Full width
+- Background: white (or white/95 if needed)
+- Slight bottom shadow optional, extremely subtle
+
+B) Center Medallion (white bump)
+- Shape: circle or ellipse (responsive)
+- Size: ~120–160px diameter depending on viewport
+- Positioned so that:
+  - Top half overlaps the top cap
+  - Bottom half protrudes into the hero background area
+- Must be the SAME white as top cap
+- Must visually merge with the cap (no visible seam)
+
+C) Logo placement
+- Logo inside the medallion
+- Scale so logo reads clearly (not tiny)
+- Provide optional small “PRESENTS” or eyebrow text BELOW the medallion if needed, but default to logo only.
+
+Technique:
+- Use real DOM elements (divs) with border-radius and positioning
+- Use z-index layering correctly
+- Use overflow hidden only where necessary
+- Avoid clip-path unless truly needed
+
+---
+
+DELIVERABLES
+1) Updated hero markup implementing:
+   - top cap strip
+   - center medallion bump
+   - logo inside medallion
+2) CSS/Tailwind styles with clear class names
+3) Minimal inline comments explaining sizing + alignment logic
+4) Ensure the hero content (headline/CTA) remains correctly spaced below the medallion and doesn’t collide.
+
+---
+
+FINAL VALIDATION (MANDATORY)
+Before finishing, confirm:
+- White cap is shallow, not dominating the hero
+- The medallion bump is clearly defined and centered
+- Logo is readable and feels housed in the bump
+- No random curvature — the bump is a deliberate medallion form
+- Works on mobile and desktop
+
+Output only the code and minimal architectural comments.

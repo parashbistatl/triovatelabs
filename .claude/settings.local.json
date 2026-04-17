@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(grep:*)",
+      "Bash(ffprobe -v quiet -print_format json -show_streams \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/video.mp4\" 2>&1 | python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(s.get\\('codec_name'\\), s.get\\('width'\\), s.get\\('height'\\), s.get\\('bit_rate'\\), s.get\\('duration'\\)\\) for s in d.get\\('streams',[]\\)]\")",
+      "Bash(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,bit_rate,duration -of default=noprint_wrappers=1 \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/video.mp4\")",
+      "Bash(which ffmpeg || /opt/homebrew/bin/ffmpeg -version 2>&1 | head -1 || /usr/local/bin/ffmpeg -version 2>&1 | head -1)",
+      "Bash(which brew && brew --version)",
+      "Bash(brew install ffmpeg 2>&1 | tail -5)",
+      "Bash(/opt/homebrew/bin/ffmpeg -version 2>&1 | head -2)",
+      "Bash(/opt/homebrew/bin/ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height,bit_rate,duration -of default=noprint_wrappers=1 \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/video.mp4\")",
+      "Bash(/opt/homebrew/bin/ffmpeg -y -i \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/video.mp4\" \\\\\n  -vf \"scale=640:-2\" -c:v libx264 -crf 28 -preset slow -an -movflags +faststart -b:v 700k \\\\\n  \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-mobile.mp4\" 2>&1 | tail -10)",
+      "Bash(/opt/homebrew/bin/ffmpeg -y -i \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-mobile.mp4\" \\\\\n  -c:v libvpx-vp9 -crf 35 -b:v 0 -an \\\\\n  \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-mobile.webm\" 2>&1 | tail -5)",
+      "Bash(/opt/homebrew/bin/ffmpeg -y -i \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/video.mp4\" \\\\\n  -vf \"scale=1920:-2\" -c:v libx264 -crf 23 -preset slow -an -movflags +faststart -b:v 1500k \\\\\n  \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-desktop.mp4\" 2>&1 | tail -5)",
+      "Bash(/opt/homebrew/bin/ffmpeg -y -i \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-desktop.mp4\" \\\\\n  -c:v libvpx-vp9 -crf 30 -b:v 0 -an \\\\\n  \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-desktop.webm\" 2>&1 | tail -5)",
+      "Bash(/opt/homebrew/bin/ffmpeg -y -i \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/video.mp4\" \\\\\n  -ss 00:00:01 -vframes 1 \\\\\n  \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/poster.png\" 2>&1 | tail -3)",
+      "Bash(which cwebp || /opt/homebrew/bin/cwebp --version 2>/dev/null)",
+      "Bash(/opt/homebrew/bin/cwebp -q 80 \\\\\n  \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/poster.png\" \\\\\n  -o \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-poster.webp\" 2>&1 && \\\\\nls -lh \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-poster.webp\")",
+      "Bash(/opt/homebrew/bin/cwebp -q 65 -resize 1280 730 \\\\\n  \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/poster.png\" \\\\\n  -o \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-poster.webp\" 2>&1 | tail -3 && \\\\\nls -lh \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/videos/hero-poster.webp\")",
+      "Bash(/opt/homebrew/bin/ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of default=noprint_wrappers=1 \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/triovate.png\" 2>/dev/null || python3 -c \"\nfrom PIL import Image\nimg = Image.open\\('/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/triovate.png'\\)\nprint\\(f'triovate.png: {img.size}, mode: {img.mode}'\\)\nimg2 = Image.open\\('/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/logo.png'\\)\nprint\\(f'logo.png: {img2.size}, mode: {img2.mode}'\\)\n\" 2>/dev/null || file \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/triovate.png\" \"/Users/kaizoku/Desktop/Work/Triovate /triovate-golden-glow-main/public/logo.png\")",
+      "Bash(node -e \"\n// Simulate fit at common mobile widths\n// Bold Inter/system-ui: avg ~0.52× fontSize for mixed-case\nconst texts = ['Build Better Systems.', 'Grow Faster Online.'];\nconst phones = [375, 390, 414, 430];\nfor \\(const vw of [6.5, 7, 7.5]\\) {\n  console.log\\('\\\\n--- ' + vw + 'vw ---'\\);\n  phones.forEach\\(w => {\n    const fs = \\(vw/100\\) * w;\n    const avail = w - 48; // px-6 both sides\n    texts.forEach\\(t => {\n      const textW = t.length * fs * 0.52;\n      const fits = textW <= avail;\n      console.log\\(w + 'px | fs=' + fs.toFixed\\(1\\) + 'px | \\\\\"' + t + '\\\\\" → ' + textW.toFixed\\(0\\) + 'px vs ' + avail + 'px ' + \\(fits ? '✓' : '✗ OVERFLOW'\\)\\);\n    }\\);\n  }\\);\n}\n\")"
+    ]
+  }
+}

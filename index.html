@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Triovate Labs | Websites, Marketing & Custom Software</title>
+  <meta name="description"
+    content="Websites, marketing systems, and custom software engineered for performance and scale." />
+  <meta name="author" content="Triovate Labs" />
+  <link rel="canonical" href="https://triovatelabs.com/" />
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <!-- Performance: Preload hero background (LCP element) with high priority -->
+  <link rel="preload" as="image" href="/triovate1.png" fetchpriority="high">
+  <!-- Performance: Preload hero brand logo (above the fold) -->
+  <link rel="preload" as="image" href="/triovate.png">
+  <!-- Performance: DNS prefetch for form endpoint -->
+  <link rel="dns-prefetch" href="https://formspree.io">
+  <!-- Performance: Preconnect to font domains for faster loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Performance: Preload critical font weights for faster LCP, font-display: swap prevents FOIT -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <!-- Performance: Non-blocking font load, font-display: swap ensures text is visible during font load -->
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </noscript>
+
+  <meta property="og:title" content="Triovate Labs | Websites, Marketing & Custom Software" />
+  <meta property="og:description"
+    content="Websites, marketing systems, and custom software engineered for performance and scale." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://triovatelabs.com/" />
+  <meta property="og:image" content="https://triovatelabs.com/triovate1.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://triovatelabs.com/triovate1.png" />
+
+  <!-- Structured data: Organization -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Triovate Labs",
+      "url": "https://triovatelabs.com/",
+      "logo": "https://triovatelabs.com/triovate1.png",
+      "sameAs": [
+        "https://www.facebook.com/triovatelabs",
+        "https://www.instagram.com/triovatelabs",
+        "https://www.linkedin.com/company/triovatelabs"
+      ]
+    }
+  </script>
+
+  <!-- Structured data: Local business / professional service with ContactPoint -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Triovate Labs",
+      "url": "https://triovatelabs.com/",
+      "image": "https://triovatelabs.com/triovate1.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kathmandu",
+        "addressCountry": "NP"
+      },
+      "telephone": "+977-9707098190",
+      "email": "info@triovatelabs.com",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+977-9707098190",
+        "email": "info@triovatelabs.com",
+        "contactType": "customer service",
+        "availableLanguage": ["English"]
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Digital Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Website Development",
+              "description": "Custom websites and web applications built for performance and scale.",
+              "url": "https://triovatelabs.com/services#website-development"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Digital Marketing",
+              "description": "Data-driven campaigns that build brands and drive growth.",
+              "url": "https://triovatelabs.com/services#digital-marketing"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Custom Software Development",
+              "description": "Purpose-built tools that automate and optimize operations.",
+              "url": "https://triovatelabs.com/services#custom-software"
+            }
+          }
+        ]
+      }
+    }
+  </script>
+
+  <!-- Structured data: BreadcrumbList for site navigation -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://triovatelabs.com/" },
+        { "@type": "ListItem", "position": 2, "name": "About", "item": "https://triovatelabs.com/about" },
+        { "@type": "ListItem", "position": 3, "name": "Services", "item": "https://triovatelabs.com/services" },
+        { "@type": "ListItem", "position": 4, "name": "Contact", "item": "https://triovatelabs.com/contact" }
+      ]
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
