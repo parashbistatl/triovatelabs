@@ -25,6 +25,7 @@ type LabAdminBlogsProps = {
 
 export default function LabAdminBlogs({ initialBlogs = [] }: LabAdminBlogsProps) {
   const [blogs, setBlogs] = useState<BlogPost[]>(initialBlogs);
+  const [isLoading, setIsLoading] = useState(true);
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [author, setAuthor] = useState("");
@@ -46,14 +47,23 @@ export default function LabAdminBlogs({ initialBlogs = [] }: LabAdminBlogsProps)
   const bodyTextareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const loadBlogs = async () => {
-    const response = await fetch("/api/admin/blogs");
-    if (!response.ok) {
-      toast.error("Failed to load blogs");
-      return;
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/admin/blogs", { cache: "no-store" });
+      if (!response.ok) {
+        toast.error("Failed to load blogs");
+        return;
+      }
+      const data = (await response.json()) as BlogPost[];
+      setBlogs(data);
+    } finally {
+      setIsLoading(false);
     }
-    const data = (await response.json()) as BlogPost[];
-    setBlogs(data);
   };
+
+  useEffect(() => {
+    void loadBlogs();
+  }, []);
 
   useEffect(() => {
     if (!editingId) {
@@ -204,11 +214,13 @@ export default function LabAdminBlogs({ initialBlogs = [] }: LabAdminBlogsProps)
   const onDelete = async (id: string) => {
     if (!window.confirm("Delete this blog?")) return;
 
+    setBlogs((prev) => prev.filter((blog) => blog.id !== id));
     const response = await fetch(`/api/admin/blogs/${id}`, {
       method: "DELETE",
     });
 
     if (!response.ok) {
+      await loadBlogs();
       toast.error("Failed to delete blog");
       return;
     }
@@ -453,6 +465,9 @@ Code block
             </div>
           </div>
           <div className="mt-4 overflow-x-auto hidden md:block">
+            {isLoading ? (
+              <div className="py-8 text-center text-sm text-gray-400">Loading blogs...</div>
+            ) : (
             <table className="min-w-full divide-y divide-gray-800">
               <thead>
                 <tr>
@@ -497,6 +512,7 @@ Code block
                 )}
               </tbody>
             </table>
+            )}
             {sortedBlogs.length === 0 && blogs.length > 0 && (
               <div className="py-8 text-center text-sm text-gray-400">
                 No matching blogs for current search/filters.
@@ -505,6 +521,10 @@ Code block
           </div>
 
           <div className="mt-4 space-y-3 md:hidden">
+            {isLoading ? (
+              <p className="text-center text-sm text-gray-400">Loading blogs...</p>
+            ) : (
+              <>
             {sortedBlogs.map((blog) => (
               <article key={blog.id} className="rounded-xl border border-gray-800 bg-gray-950 p-3">
                 <h3 className="text-sm font-semibold text-white">{blog.title}</h3>
@@ -528,6 +548,8 @@ Code block
             ))}
             {blogs.length === 0 && <p className="text-center text-sm text-gray-400">No blogs yet. Add your first blog from the form above.</p>}
             {sortedBlogs.length === 0 && blogs.length > 0 && <p className="text-center text-sm text-gray-400">No matching blogs for current search/filters.</p>}
+              </>
+            )}
           </div>
         </section>
       </main>

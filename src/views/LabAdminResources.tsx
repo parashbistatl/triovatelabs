@@ -21,6 +21,7 @@ type LabAdminResourcesProps = {
 
 export default function LabAdminResources({ initialResources = [] }: LabAdminResourcesProps) {
   const [resources, setResources] = useState<ResourceItem[]>(initialResources);
+  const [isLoading, setIsLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
@@ -40,13 +41,18 @@ export default function LabAdminResources({ initialResources = [] }: LabAdminRes
   const [pdfInputKey, setPdfInputKey] = useState(0);
 
   const loadResources = async () => {
-    const response = await fetch("/api/admin/resources");
-    if (!response.ok) {
-      toast.error("Failed to load resources");
-      return;
+    setIsLoading(true);
+    try {
+      const response = await fetch("/api/admin/resources", { cache: "no-store" });
+      if (!response.ok) {
+        toast.error("Failed to load resources");
+        return;
+      }
+      const data = (await response.json()) as ResourceItem[];
+      setResources(data);
+    } finally {
+      setIsLoading(false);
     }
-    const data = (await response.json()) as ResourceItem[];
-    setResources(data);
   };
 
   useEffect(() => {
@@ -170,11 +176,13 @@ export default function LabAdminResources({ initialResources = [] }: LabAdminRes
   const onDelete = async (id: string) => {
     if (!window.confirm("Delete this resource?")) return;
 
+    setResources((prev) => prev.filter((resource) => resource.id !== id));
     const response = await fetch(`/api/admin/resources/${id}`, {
       method: "DELETE",
     });
 
     if (!response.ok) {
+      await loadResources();
       toast.error("Failed to delete resource");
       return;
     }
@@ -351,6 +359,10 @@ export default function LabAdminResources({ initialResources = [] }: LabAdminRes
             </div>
           </div>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {isLoading ? (
+              <p className="text-sm text-gray-400">Loading resources...</p>
+            ) : (
+              <>
             {sortedResources.map((item) => (
               <article key={item.id} className="rounded-lg border border-gray-800 bg-gray-950 p-3">
                 <img
@@ -385,6 +397,8 @@ export default function LabAdminResources({ initialResources = [] }: LabAdminRes
             ))}
             {resources.length === 0 && <p className="text-sm text-gray-400">No resources yet. Add one from the left form.</p>}
             {sortedResources.length === 0 && resources.length > 0 && <p className="text-sm text-gray-400">No matching resources for current search/filters.</p>}
+              </>
+            )}
           </div>
         </section>
       </main>

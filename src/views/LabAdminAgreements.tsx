@@ -90,7 +90,7 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
   const [title, setTitle] = useState("");
   const [variables, setVariables] = useState<Record<string, string>>({});
   const [isSaving, setIsSaving] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const template = type && AGREEMENT_TEMPLATES[type as AgreementType];
 
@@ -122,7 +122,7 @@ useEffect(() => {
   const loadAgreements = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/admin/agreements");
+      const response = await fetch("/api/admin/agreements", { cache: "no-store" });
       if (!response.ok) {
         throw new Error("Failed to load agreements");
       }
@@ -134,6 +134,10 @@ useEffect(() => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    void loadAgreements();
+  }, []);
 
   const resetForm = () => {
     setTitle("");
@@ -205,12 +209,14 @@ useEffect(() => {
       return;
     }
 
+    setAgreements((prev) => prev.filter((agreement) => agreement.id !== id));
     try {
       const response = await fetch(`/api/admin/agreements/${id}`, {
         method: "DELETE",
       });
 
       if (!response.ok) {
+        await loadAgreements();
         throw new Error("Failed to delete agreement");
       }
 
