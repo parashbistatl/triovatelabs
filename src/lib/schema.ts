@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp } from "drizzle-orm/pg-core"
+import { jsonb, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core"
 
 export const blogs = pgTable("blogs", {
   id: serial("id").primaryKey(),
@@ -20,4 +20,14 @@ export const resources = pgTable("resources", {
   thumbnail: text("thumbnail"),
   pdfUrl: text("pdf_url"),
   createdAt: timestamp("created_at").defaultNow(),
+})
+
+export const agreements = pgTable("agreements", {
+  id: serial("id").primaryKey(),
+  slug: text("slug").unique().notNull(),
+  type: text("type").notNull(),
+  title: text("title").notNull(),
+  variables: jsonb("variables").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 })

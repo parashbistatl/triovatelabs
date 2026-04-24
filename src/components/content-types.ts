@@ -20,4 +20,5 @@ export interface ResourceItem {
   thumbnail: string;
   pdfUrl: string;
   status: ContentStatus;
+  createdAt?: string;
 }

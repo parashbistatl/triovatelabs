@@ -1,7 +1,7 @@
 import Reveal from "@/components/ui/reveal";
 import BrandMark from "@/components/ui/brand-mark";
 import { ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { useRef, useCallback, useState, useEffect } from "react";
 
 const FLASH_IN_MS = 100;
@@ -126,7 +126,7 @@ const Hero = () => {
         {/* Logo */}
         <div className="flex justify-center">
           <div className="md:hidden">
-            <Link to="/" aria-label="Triovate Labs — Home" className="inline-flex items-center">
+            <Link href="/" aria-label="Triovate Labs — Home" className="inline-flex items-center">
               <img src="/triovate1.png" alt="Triovate Labs" width={160} height={160}
                 fetchPriority="high" className="h-24 w-auto object-contain" />
             </Link>
@@ -171,7 +171,7 @@ const Hero = () => {
             {/* CTA */}
             <Reveal delayMs={100}>
               <div className="mt-7 md:mt-6 sm:mt-8 animate-popup" style={{ animationDelay:"0.28s" }}>
-                <Link to="/contact#start">
+                <Link href="/contact#start">
                   <button
                     className="group relative px-10 py-4 rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 flex items-center gap-3 overflow-hidden"
                     style={{ background:"linear-gradient(135deg, #E2B93B 0%, #CCA430 100%)", color:"#0A1628", boxShadow:"0 4px 24px rgba(226,185,59,0.35), 0 1px 4px rgba(0,0,0,0.10)" }}

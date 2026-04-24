@@ -1,12 +1,5 @@
-import { auth } from "@/auth"
-import { redirect } from "next/navigation"
+import { redirect } from "next/navigation";
 
-export default async function LabAdminRoot() {
-  const session = await auth()
-
-  if (session) {
-    redirect("/labadmin/dashboard")
-  }
-
-  redirect("/labadmin/login")
+export default function Page() {
+  redirect("/labadmin/login");
 }

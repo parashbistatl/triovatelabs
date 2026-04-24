@@ -1,4 +1,6 @@
-import { useNavigate } from "react-router-dom";
+"use client";
+
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ShatterButton } from "./shatter-button";
 
@@ -9,11 +11,11 @@ type Props = {
 };
 
 export default function PrimaryCTA({ intent = "get-started", className, children }: Props) {
-    const navigate = useNavigate();
+    const router = useRouter();
     const label = children ?? (intent === "get-started" ? "Get Started" : "Contact Us");
     const onClick = () => {
         try {
-            navigate("/contact#start");
+            router.push("/contact#start");
         } catch {
             window.location.href = "/contact#start";
         }
@@ -36,5 +38,3 @@ export default function PrimaryCTA({ intent = "get-started", className, children
         </ShatterButton>
     );
 }
-
-

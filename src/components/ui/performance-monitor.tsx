@@ -22,7 +22,8 @@ const PerformanceMonitor = () => {
             // First Input Delay (FID)
             const fidObserver = new PerformanceObserver((list) => {
                 for (const entry of list.getEntries()) {
-                    console.log('FID:', entry.processingStart - entry.startTime);
+                    const firstInputEntry = entry as PerformanceEntry & { processingStart?: number };
+                    console.log('FID:', (firstInputEntry.processingStart ?? firstInputEntry.startTime) - firstInputEntry.startTime);
                 }
             });
 
@@ -61,4 +62,3 @@ const PerformanceMonitor = () => {
 };
 
 export default PerformanceMonitor;
-

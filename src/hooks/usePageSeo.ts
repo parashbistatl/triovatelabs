@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 
 interface PageSeoOptions {
@@ -14,7 +16,7 @@ interface PageSeoOptions {
 }
 
 const DEFAULT_SITE_URL =
-  import.meta.env.VITE_SITE_URL?.replace(/\/$/, "") || "https://triovatelabs.com";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://triovatelabs.com";
 
 const DEFAULT_OG_IMAGE = "/triovate1.png";
 
@@ -99,4 +101,3 @@ export function usePageSeo({
     canonicalLink.href = fullUrl;
   }, [title, description, path, ogImagePath, robots]);
 }
-

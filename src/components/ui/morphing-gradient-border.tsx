@@ -19,6 +19,9 @@ export function MorphingGradientBorder({
     direction = "down",
 }: MorphingGradientBorderProps) {
     const ref = useRef<HTMLDivElement>(null);
+    const setLocalRef = (node: HTMLDivElement | null) => {
+        (ref as { current: HTMLDivElement | null }).current = node;
+    };
     const [inViewRef, inView] = useInView({ threshold: 0.1, once: false });
 
     const { scrollYProgress } = useScroll({
@@ -50,10 +53,8 @@ export function MorphingGradientBorder({
     return (
         <motion.div
             ref={(node) => {
-                ref.current = node;
-                if (typeof inViewRef === "function") {
-                    inViewRef(node);
-                } else if (inViewRef) {
+                setLocalRef(node);
+                if (inViewRef) {
                     (inViewRef as any).current = node;
                 }
             }}
@@ -73,4 +74,3 @@ export function MorphingGradientBorder({
         </motion.div>
     );
 }
-

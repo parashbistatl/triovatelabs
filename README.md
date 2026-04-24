@@ -1,130 +1,89 @@
 # Triovate Labs Marketing Site
 
-This repository contains the marketing website for **Triovate Labs** – a premium, performance‑oriented site for web development, digital marketing, and custom software services.
+This repository contains the current Next.js marketing website and admin panel for Triovate Labs.
 
-The app is a modern React single‑page application with a custom design system and a strong focus on performance, accessibility, and SEO.
+## Stack
 
----
+- Next.js 14 app router
+- React 18 + TypeScript
+- Tailwind CSS + shadcn/ui
+- NextAuth credentials auth for `/labadmin`
+- Neon Postgres for blogs, resources, and agreements
+- UploadThing for production file uploads
+- Netlify with `@netlify/plugin-nextjs`
 
-## Tech stack
-
-- **Build tool**: [Vite](https://vitejs.dev/) (React + TypeScript template)
-- **UI library**: React 18 + [React Router v6](https://reactrouter.com/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with a custom design token system (`src/index.css`)
-- **UI components**: [shadcn/ui](https://ui.shadcn.com/) on top of [Radix UI](https://www.radix-ui.com/)
-- **Animations / 3D**: Framer Motion (for some components), custom CSS keyframes, light Three.js usage for 3D effects
-- **Forms & validation**: `react-hook-form` + `zod`
-
-For a page‑by‑page breakdown of content and UX, see `docs/README.md`.
-
----
-
-## Getting started
+## Local development
 
 Requirements:
 
-- Node.js 18+ (recommended via [`nvm`](https://github.com/nvm-sh/nvm))
-- npm 10+ (comes with Node 18+)
+- Node.js 20
+- npm 10+
 
-Install dependencies and run the dev server:
+Run locally:
 
 ```bash
 npm install
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173` by default.
-
-### Useful scripts
+Default local URL:
 
 ```bash
-npm run dev      # Start Vite dev server
-npm run build    # Production build
-npm run preview  # Preview the production build locally
-npm run lint     # Run ESLint across the codebase
+http://localhost:3000
 ```
 
----
+## Netlify deployment
 
-## Project structure (high level)
+This project is configured with the `netlify.toml` file and the Next.js Netlify plugin.
 
-```text
-src/
-  components/
-    sections/      # Page-specific sections (e.g. home Hero)
-    ui/            # Shared design-system + shadcn UI components
-  pages/
-    Index.tsx      # Home page (/)
-    About.tsx      # About page (/about)
-    Services.tsx   # Services page (/services)
-    Contact.tsx    # Contact page (/contact)
-    PrivacyPolicy.tsx
-    NotFound.tsx   # 404 catch-all
-  hooks/
-    usePageSeo.ts  # Per-page SEO (title/meta/OG/Twitter/canonical)
-    useScrollTilt.ts
-index.css          # Global Tailwind + design tokens
-public/
-  favicon.png
-  triovate.png
-  triovate1.png    # Primary brand mark used in heroes / social images
-  robots.txt
-  sitemap.xml
-```
+Required Netlify environment variables:
 
-Routing is handled by React Router; the main route configuration lives in `src/main.tsx` / `src/App.tsx`.
+- `DATABASE_URL`
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD`
+- `NEXTAUTH_SECRET`
+- `NEXTAUTH_URL`
+- `UPLOADTHING_TOKEN`
 
----
+Recommended:
 
-## SEO, meta tags & social sharing
+- `NODE_VERSION=20`
 
-- Base `<head>` tags live in `index.html` (title, description, canonical, Open Graph, Twitter card, Organization/ProfessionalService JSON‑LD).
-- Per‑page SEO is handled via the `usePageSeo` hook in:
-  - `Index.tsx`
-  - `About.tsx`
-  - `Services.tsx`
-  - `Contact.tsx`
-- `public/robots.txt` and `public/sitemap.xml` are checked into the repo and assume the production origin is:
-  - `https://triovatelabs.com`
-  - If you deploy under a different domain, update:
-    - `VITE_SITE_URL` (see below)
-    - `index.html` OG/canonical URLs
-    - `robots.txt` and `sitemap.xml`
+## Production upload behavior
 
-### Environment
+- In local development, uploads can still fall back to `public/uploads` if UploadThing is not configured.
+- In production, uploads must use UploadThing.
+- If `UPLOADTHING_TOKEN` is missing on Netlify, image/PDF uploads will fail with a clear error instead of silently writing to ephemeral local storage.
 
-The SEO hook uses `VITE_SITE_URL` if present:
+This keeps production behavior stable for:
 
-```bash
-VITE_SITE_URL=https://your-domain.example.com
-```
+- blog cover images
+- inline blog images
+- resource thumbnails
+- resource PDFs
 
-Create a `.env` or `.env.local` file at the project root to override the default.
+## What should work in production
 
----
+- Admin login and protected `/labadmin/*` routes
+- Blog CRUD with cover image and inline article images
+- Resource CRUD with image and PDF uploads
+- Agreement creation and public agreement pages
+- Public blog/resource pages reading live database content
 
-## Contact form behaviour
+## Deployment checklist
 
-The contact form (`Contact.tsx`) currently:
+1. Add the required environment variables in Netlify.
+2. Confirm your Neon database is reachable from Netlify.
+3. Confirm UploadThing is configured and active.
+4. Set `NEXTAUTH_URL` to your real production domain.
+5. Update `public/sitemap.xml` and `public/robots.txt` if the production domain changes.
+6. Deploy and test:
+   - admin login
+   - create a blog with cover image + inline image
+   - create a resource with thumbnail + PDF
+   - open public blog/resource/agreement pages
 
-- Validates all fields with `zod` + `react-hook-form`
-- Uses a hidden `website` field as a honeypot (spam protection)
-- On successful submission:
-  - Adds a `data-analytics="lead-submitted"` attribute to the `<form>`
-  - Shows a toast: “Thanks! Your message has been received.”
-  - Resets the form fields
+## Notes
 
-There is **no backend integration configured yet**. To wire this up to an API or email provider:
-
-1. Update the `onSubmit` handler in `Contact.tsx` to `fetch`/`axios.post` to your backend.
-2. Handle errors and success responses (show an appropriate toast).
-
----
-
-## Development notes
-
-- The design system (colors, radii, shadows, gradients, motion tokens) is defined in `src/index.css` under `@layer base`.
-- Many components rely on Tailwind’s responsive utilities (`sm:`, `md:`, `lg:`) for first‑fold layout on mobile vs. desktop.
-- Some 3D / animated components use Three.js and Framer Motion; if you remove them, also clean up unused imports to keep bundle size small.
-
-For deeper documentation and UX copy, see the markdown files under `docs/`. This README focuses on how to run and extend the codebase.
+- This README is intentionally aligned with the current Next.js app structure, not the old Vite setup.
+- There are existing unrelated lint issues in the repository; deployment readiness here focuses on runtime behavior and production hosting safety.

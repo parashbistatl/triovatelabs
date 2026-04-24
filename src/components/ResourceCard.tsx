@@ -1,11 +1,19 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import type { ResourceItem } from "@/components/content-types";
 import { resolveFileRefToUrl } from "@/lib/browser-file-store";
 
 type ResourceCardProps = {
   resource: ResourceItem;
 };
+
+function truncateWords(text: string, maxWords: number) {
+  const words = text.trim().split(/\s+/);
+  if (words.length <= maxWords) return text;
+  return `${words.slice(0, maxWords).join(" ")}...`;
+}
 
 export default function ResourceCard({ resource }: ResourceCardProps) {
   const [thumbnailSrc, setThumbnailSrc] = useState(resource.thumbnail);
@@ -41,7 +49,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
   }, [resource.thumbnail, resource.pdfUrl]);
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
       <img
         src={thumbnailSrc}
         alt={resource.title}
@@ -49,11 +57,23 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
         loading="lazy"
       />
 
-      <div className="space-y-3 p-5">
-        <h2 className="text-xl font-semibold text-gray-900">{resource.title}</h2>
-        <p className="text-sm leading-6 text-gray-600">{resource.description}</p>
+      <div className="flex flex-1 flex-col space-y-3 p-5">
+        <h2
+          className="min-h-[3.5rem] text-xl font-semibold leading-7 text-gray-900"
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {resource.title}
+        </h2>
+        <p className="min-h-[6rem] text-sm leading-6 text-gray-600">
+          {truncateWords(resource.description, 22)}
+        </p>
 
-        <div className="flex items-center gap-3">
+        <div className="mt-auto flex items-center gap-3">
           <a
             href={pdfHref}
             target="_blank"
@@ -63,7 +83,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
             Download PDF
           </a>
           <Link
-            to={`/resources/${resource.slug}`}
+            href={`/resources/${resource.slug}`}
             className="text-sm font-semibold text-blue-700 hover:text-blue-800"
           >
             View details

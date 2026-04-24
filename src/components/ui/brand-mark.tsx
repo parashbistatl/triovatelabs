@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 interface BrandMarkProps {
   mode?: "onLight" | "onMedia";
@@ -7,7 +7,7 @@ interface BrandMarkProps {
 
 const BrandMark = ({ mode: _mode, src = "/triovate.png" }: BrandMarkProps) => (
   <Link
-    to="/"
+    href="/"
     className="inline-flex items-center"
     aria-label="Triovate Labs — Home"
   >

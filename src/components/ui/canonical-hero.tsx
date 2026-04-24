@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import Reveal from "@/components/ui/reveal";
 
 interface CanonicalHeroProps {
@@ -35,7 +35,7 @@ export default function CanonicalHero({
           className="canonical-hero-white relative z-10 hidden lg:flex items-center px-6 sm:px-10 lg:px-14 py-5 lg:py-0"
           style={{ backgroundColor: "var(--hero-logo-bg)" }}
         >
-          <Link to="/" aria-label="Triovate Labs — Home">
+          <Link href="/" aria-label="Triovate Labs — Home">
             <img
               src={logoSrc}
               alt="Triovate Labs"

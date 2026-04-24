@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { useRef } from "react";
 import { useInView } from "@/hooks/useInView";
 import { cn } from "@/lib/utils";
 
@@ -57,7 +56,7 @@ export function SplitTextReveal({
             rotateX: 0,
             transition: {
                 duration: 0.6,
-                ease: [0.22, 1, 0.36, 1],
+                ease: [0.22, 1, 0.36, 1] as const,
             },
         },
     };
@@ -91,6 +90,5 @@ export function SplitTextReveal({
         </motion.span>
     );
 }
-
 
 

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 /*
  * LogoBadge — white-backed logo mark for use over busy backgrounds.
@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
  */
 const LogoBadge = ({ className = "" }: { className?: string }) => (
   <Link
-    to="/"
+    href="/"
     className={`inline-flex items-center justify-center ${className}`}
     aria-label="Triovate Labs — Home"
   >

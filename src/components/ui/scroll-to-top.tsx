@@ -1,22 +1,24 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowUp } from "lucide-react";
 
 const ScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
-    const location = useLocation();
+    const pathname = usePathname() ?? "/";
 
     // Auto scroll to top when route changes, but skip if there's a hash (let hash navigation handle it)
     useEffect(() => {
         // Don't scroll to top if URL has a hash - let the target page handle hash navigation
-        if (!location.hash) {
+        if (typeof window !== "undefined" && !window.location.hash) {
             window.scrollTo({
                 top: 0,
-                behavior: "instant",
+                behavior: "auto",
             });
         }
-    }, [location.pathname, location.hash]);
+    }, [pathname]);
 
     useEffect(() => {
         let rafId: number | null = null;

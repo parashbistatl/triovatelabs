@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 /*
  * HeroTopCap — site-wide structural header: white strip + medallion.
@@ -50,7 +50,7 @@ const HeroTopCap = () => (
     >
       {/* Logo — fills 80% of the medallion for clear readability */}
       <Link
-        to="/"
+        href="/"
         className="flex items-center justify-center w-4/5 h-4/5"
         aria-label="Triovate Labs — Home"
       >
