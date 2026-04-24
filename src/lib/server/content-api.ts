@@ -5,6 +5,7 @@ import { randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { UTApi, UTFile } from "uploadthing/server";
+import type { Agreement, AgreementType } from "@/lib/types/agreement";
 
 const sql = neon(process.env.DATABASE_URL!);
 const publicUploadsDir = path.join(process.cwd(), "public", "uploads");
@@ -166,15 +167,25 @@ export function normalizeResource(row: ResourceRow | Record<string, any>) {
 }
 
 export function normalizeAgreement(row: AgreementRow | Record<string, any>) {
-  return {
+  const rawType = String(row.type);
+  const agreementType: AgreementType =
+    rawType === "website_proposal" ||
+    rawType === "digital_starter_agreement" ||
+    rawType === "digital_marketing_proposal"
+      ? rawType
+      : "website_proposal";
+
+  const normalized: Agreement = {
     id: Number(row.id),
     slug: String(row.slug),
-    type: String(row.type),
+    type: agreementType,
     title: String(row.title),
     variables: row.variables || {},
     createdAt: new Date(row.created_at).toISOString(),
     updatedAt: new Date(row.updated_at).toISOString(),
   };
+
+  return normalized;
 }
 
 export async function getAdminBlogs() {
