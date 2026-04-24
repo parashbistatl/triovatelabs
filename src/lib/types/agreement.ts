@@ -13,8 +13,8 @@ export interface Agreement {
   type: AgreementType;
   title: string;
   variables: AgreementVariables;
-  createdAt: string | Date;
-  updatedAt: string | Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface CreateAgreementPayload {
