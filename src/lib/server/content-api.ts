@@ -206,6 +206,29 @@ export async function getAdminAgreements() {
   return rows.map(normalizeAgreement);
 }
 
+export async function getAgreementBySlug(slug: string) {
+  await ensureTables();
+  const rows = await sql`
+    SELECT * FROM site_agreements
+    WHERE slug = ${slug}
+    LIMIT 1
+  `;
+
+  if (rows.length === 0) {
+    return null;
+  }
+
+  const agreement = rows[0];
+  const data = normalizeAgreement(agreement);
+
+  try {
+    const html = await renderAgreementHtml(agreement.type, agreement.variables || {});
+    return { ...data, html };
+  } catch {
+    return data;
+  }
+}
+
 export async function getAdminStats() {
   await ensureTables();
   const [blogRows, resourceRows, agreementRows] = await Promise.all([

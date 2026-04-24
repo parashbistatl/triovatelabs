@@ -1,67 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Download } from "lucide-react";
 import { toast } from "sonner";
+import type { Agreement } from "@/lib/types/agreement";
 
-type AgreementType = 
-  | "website_proposal"
-  | "digital_starter_agreement"
-  | "digital_marketing_proposal";
-
-type Agreement = {
-  id: number;
-  slug: string;
-  type: AgreementType;
-  title: string;
-  variables: Record<string, string>;
-  createdAt: string;
-  updatedAt: string;
+type AgreementWithHtml = Agreement & {
   html?: string;
 };
 
 type AgreementPageProps = {
-  slug: string;
+  agreement: AgreementWithHtml | null;
+  error?: string | null;
 };
 
-export default function AgreementPage({ slug }: AgreementPageProps) {
-  const [agreement, setAgreement] = useState<Agreement | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadAgreement = async () => {
-      if (!slug) {
-        setError("Invalid agreement slug");
-        setIsLoading(false);
-        return;
-      }
-
-      try {
-        setIsLoading(true);
-        const response = await fetch(`/api/public/agreements/${slug}`);
-
-        if (!response.ok) {
-          if (response.status === 404) {
-            setError("Agreement not found");
-          } else {
-            setError("Failed to load agreement");
-          }
-          return;
-        }
-
-        const data = await response.json();
-        setAgreement(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load agreement");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    void loadAgreement();
-  }, [slug]);
-
+export default function AgreementPage({ agreement, error = null }: AgreementPageProps) {
   const downloadAsPDF = () => {
     if (!agreement || !agreement.html) {
       toast.error("Cannot download: agreement HTML not available");
@@ -69,6 +21,28 @@ export default function AgreementPage({ slug }: AgreementPageProps) {
     }
 
     try {
+      let cleanedUp = false;
+      let printTriggered = false;
+      let fallbackTimer: ReturnType<typeof setTimeout> | null = null;
+
+      const cleanupIframe = (iframe: HTMLIFrameElement) => {
+        if (cleanedUp) return;
+        cleanedUp = true;
+        if (fallbackTimer) {
+          clearTimeout(fallbackTimer);
+          fallbackTimer = null;
+        }
+        if (document.body.contains(iframe)) {
+          document.body.removeChild(iframe);
+        }
+      };
+
+      const triggerPrint = (iframe: HTMLIFrameElement) => {
+        if (printTriggered) return;
+        printTriggered = true;
+        iframe.contentWindow?.print();
+      };
+
       // Generate meaningful filename
       const clientName = agreement.variables?.CLIENT_NAME || "Client";
       const date = new Date();
@@ -101,19 +75,19 @@ export default function AgreementPage({ slug }: AgreementPageProps) {
       // Wait for content to load, then print
       iframe.onload = () => {
         setTimeout(() => {
-          iframe.contentWindow?.print();
+          triggerPrint(iframe);
           // Clean up after a short delay
           setTimeout(() => {
-            document.body.removeChild(iframe);
+            cleanupIframe(iframe);
           }, 100);
         }, 100);
       };
 
       // Fallback if onload doesn't trigger
-      setTimeout(() => {
-        if (document.body.contains(iframe)) {
-          iframe.contentWindow?.print();
-          document.body.removeChild(iframe);
+      fallbackTimer = setTimeout(() => {
+        if (!cleanedUp && document.body.contains(iframe)) {
+          triggerPrint(iframe);
+          cleanupIframe(iframe);
         }
       }, 1000);
 
@@ -126,14 +100,6 @@ export default function AgreementPage({ slug }: AgreementPageProps) {
       toast.error("Failed to generate PDF");
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    );
-  }
 
   if (error || !agreement) {
     return (
@@ -148,15 +114,28 @@ export default function AgreementPage({ slug }: AgreementPageProps) {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Floating PDF Download Button */}
-      <button
-        onClick={downloadAsPDF}
-        className="fixed top-4 right-4 z-50 inline-flex items-center justify-center gap-2 rounded-lg bg-yellow-400 px-4 py-3 text-black font-bold hover:bg-yellow-300 transition-colors shadow-lg"
-        title="Download as PDF"
-      >
-        <Download size={20} />
-        <span>PDF</span>
-      </button>
+      <div className="sticky top-0 z-[100] border-b border-gray-200 bg-white/95 backdrop-blur print:hidden">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+              Agreement
+            </p>
+            <h1 className="text-sm font-semibold text-gray-900 sm:text-base">
+              {agreement.title}
+            </h1>
+          </div>
+
+          <button
+            onClick={downloadAsPDF}
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-yellow-400 px-4 py-2.5 text-sm font-bold text-black shadow-lg transition-colors hover:bg-yellow-300"
+            title="Download as PDF"
+            type="button"
+          >
+            <Download size={18} />
+            <span>Download PDF</span>
+          </button>
+        </div>
+      </div>
 
       {/* Full Page Content */}
       <main className="w-full">
