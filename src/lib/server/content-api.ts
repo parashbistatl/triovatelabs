@@ -218,6 +218,13 @@ export function toIsoDate(value: unknown) {
   return date.toISOString().slice(0, 10);
 }
 
+function toIsoTimestamp(value: unknown) {
+  if (!value) return undefined;
+  const date = new Date(String(value));
+  if (Number.isNaN(date.getTime())) return undefined;
+  return date.toISOString();
+}
+
 export function normalizeBlog(row: BlogRow | Record<string, unknown>) {
   return {
     id: String(row.id),
@@ -241,7 +248,7 @@ export function normalizeResource(row: ResourceRow | Record<string, unknown>) {
     thumbnail: String(row.thumbnail),
     pdfUrl: String(row.pdf_url),
     status: normalizeStatusValue(row.status) || "published",
-    createdAt: row.created_at ? new Date(row.created_at).toISOString() : undefined,
+    createdAt: toIsoTimestamp(row.created_at),
   };
 }
 
@@ -262,14 +269,14 @@ export function normalizeAgreement(row: AgreementRow | Record<string, unknown>) 
     variables: row.variables || {},
     documentHtml: row.document_html ? String(row.document_html) : null,
     currencyCode: String(row.currency_code || "NPR").toUpperCase(),
-    expiresAt: row.expires_at ? new Date(row.expires_at).toISOString() : null,
+    expiresAt: toIsoTimestamp(row.expires_at) ?? null,
     passwordProtected: Boolean(row.password_hash),
-    signedAt: row.signed_at ? new Date(row.signed_at).toISOString() : null,
+    signedAt: toIsoTimestamp(row.signed_at) ?? null,
     signerIp: row.signer_ip ? String(row.signer_ip) : null,
     signerName: row.signer_name ? String(row.signer_name) : null,
     signatureData: row.signature_data ? String(row.signature_data) : null,
-    createdAt: new Date(row.created_at).toISOString(),
-    updatedAt: new Date(row.updated_at).toISOString(),
+    createdAt: toIsoTimestamp(row.created_at) ?? new Date().toISOString(),
+    updatedAt: toIsoTimestamp(row.updated_at) ?? new Date().toISOString(),
   };
 
   return normalized;
