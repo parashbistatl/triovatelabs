@@ -181,6 +181,11 @@
   filter: brightness(1.03);
 }
 
+.labadmin-editor-header-btn {
+  min-height: 48px;
+  white-space: nowrap;
+}
+
 .labadmin-secondary-btn,
 .labadmin-editor-tab,
 .labadmin-agreement-action {
@@ -347,6 +352,10 @@
 }
 
 @media (max-width: 1023px) {
+  .labadmin-editor-header-btn {
+    min-height: 44px;
+  }
+
   .labadmin-document-editable {
     min-height: 280px;
   }

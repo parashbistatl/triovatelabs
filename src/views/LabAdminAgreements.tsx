@@ -786,14 +786,14 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
         {showEditor ? (
           <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 p-3 backdrop-blur md:p-6">
             <div className="labadmin-editor-surface flex min-h-full flex-col overflow-hidden rounded-[32px] border border-gray-800">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800 px-4 py-4 md:px-6">
-                <div>
+              <div className="flex flex-col gap-4 border-b border-gray-800 px-4 py-4 md:px-6 lg:flex-row lg:items-center lg:justify-between">
+                <div className="min-w-0 flex-1">
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] text-yellow-400">
                     {editor.id ? "Edit Agreement" : "Create Agreement"}
                   </p>
                   <h2 className="mt-2 text-xl font-semibold text-white">Document Editor</h2>
                 </div>
-                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center sm:justify-end">
+                <div className="flex w-full flex-col gap-2 sm:flex-row lg:w-auto lg:flex-shrink-0 lg:justify-end">
                   <button
                     type="button"
                     onClick={() => {
@@ -804,7 +804,7 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
                       setShowEditor(false);
                       setShowCreateForm(true);
                     }}
-                    className="labadmin-secondary-btn inline-flex min-h-11 w-full items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-medium transition sm:w-auto"
+                    className="labadmin-editor-header-btn labadmin-secondary-btn inline-flex min-h-11 w-full items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-medium transition sm:flex-1 lg:min-w-[120px] lg:flex-none"
                   >
                     {editor.id ? "Close" : "Back"}
                   </button>
@@ -812,7 +812,7 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
                     type="button"
                     onClick={() => void handleSave()}
                     disabled={isSaving}
-                    className="labadmin-cta inline-flex min-h-11 w-full items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-semibold transition disabled:opacity-60 sm:w-auto"
+                    className="labadmin-editor-header-btn labadmin-cta inline-flex min-h-11 w-full items-center justify-center rounded-2xl px-5 py-2.5 text-sm font-semibold transition disabled:opacity-60 sm:flex-1 lg:min-w-[160px] lg:flex-none"
                   >
                     {isSaving ? "Saving..." : editor.id ? "Save Changes" : "Create Link"}
                   </button>
