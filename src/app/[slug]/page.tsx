@@ -1,5 +1,5 @@
-import { getAgreementBySlug } from "@/lib/server/content-api";
-import AgreementPage from "@/views/AgreementPage";
+import { notFound, redirect } from "next/navigation";
+import { getAgreementRecordBySlug } from "@/lib/server/content-api";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -11,15 +11,11 @@ type PageProps = {
 };
 
 export default async function Page({ params }: PageProps) {
-  if (!params.slug) {
-    return <AgreementPage agreement={null} error="Invalid agreement slug" />;
-  }
-
-  const agreement = await getAgreementBySlug(params.slug).catch(() => null);
+  const agreement = await getAgreementRecordBySlug(params.slug).catch(() => null);
 
   if (!agreement) {
-    return <AgreementPage agreement={null} error="Agreement not found" />;
+    notFound();
   }
 
-  return <AgreementPage agreement={agreement} />;
+  redirect(`/agreements/view/${params.slug}`);
 }

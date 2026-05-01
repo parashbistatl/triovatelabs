@@ -1,0 +1,353 @@
+.labadmin-shell {
+  --lab-bg: #020617;
+  --lab-surface: rgba(15, 23, 42, 0.94);
+  --lab-surface-solid: #111827;
+  --lab-surface-soft: #0f172a;
+  --lab-border: rgba(71, 85, 105, 0.45);
+  --lab-border-strong: rgba(148, 163, 184, 0.26);
+  --lab-text: #f8fafc;
+  --lab-text-muted: #94a3b8;
+  --lab-accent: #facc15;
+  --lab-accent-text: #111827;
+  --lab-card-shadow: 0 18px 45px rgba(2, 6, 23, 0.28);
+  min-height: 100vh;
+  color: var(--lab-text);
+}
+
+.labadmin-shell[data-theme="light"] {
+  --lab-bg: #f8fafc;
+  --lab-surface: rgba(255, 255, 255, 0.96);
+  --lab-surface-solid: #ffffff;
+  --lab-surface-soft: #eef2ff;
+  --lab-border: rgba(148, 163, 184, 0.4);
+  --lab-border-strong: rgba(100, 116, 139, 0.28);
+  --lab-text: #0f172a;
+  --lab-text-muted: #475569;
+  --lab-accent: #f59e0b;
+  --lab-accent-text: #111827;
+  --lab-card-shadow: 0 22px 55px rgba(148, 163, 184, 0.16);
+}
+
+.labadmin-shell[data-theme="light"] {
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.1), transparent 24%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+}
+
+.labadmin-shell .bg-gray-950,
+.labadmin-shell .bg-gray-900,
+.labadmin-shell .bg-gray-900\/95,
+.labadmin-shell .bg-gray-900\/50,
+.labadmin-shell .bg-gray-800,
+.labadmin-shell .bg-gray-800\/90 {
+  background-color: var(--lab-surface-solid) !important;
+}
+
+.labadmin-shell .border-gray-800,
+.labadmin-shell .border-gray-700,
+.labadmin-shell .divide-gray-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: var(--lab-border) !important;
+}
+
+.labadmin-shell .text-white,
+.labadmin-shell .text-gray-200,
+.labadmin-shell .text-gray-300,
+.labadmin-shell .text-gray-400,
+.labadmin-shell .text-gray-500,
+.labadmin-shell .text-black {
+  color: var(--lab-text) !important;
+}
+
+.labadmin-shell .text-yellow-400,
+.labadmin-shell .text-yellow-300 {
+  color: var(--lab-accent) !important;
+}
+
+.labadmin-shell .bg-yellow-400,
+.labadmin-shell .bg-yellow-300 {
+  background-color: var(--lab-accent) !important;
+  color: var(--lab-accent-text) !important;
+}
+
+.labadmin-shell .placeholder\:text-gray-400::placeholder,
+.labadmin-shell .placeholder\:text-gray-500::placeholder {
+  color: color-mix(in srgb, var(--lab-text-muted) 86%, transparent) !important;
+}
+
+.labadmin-shell input,
+.labadmin-shell textarea,
+.labadmin-shell select,
+.labadmin-shell table,
+.labadmin-shell header,
+.labadmin-shell nav,
+.labadmin-shell .rounded-2xl,
+.labadmin-shell .rounded-xl,
+.labadmin-shell .rounded-lg {
+  box-shadow: var(--lab-card-shadow);
+}
+
+.labadmin-shell[data-theme="light"] .bg-blue-100 {
+  background-color: #dbeafe !important;
+}
+
+.labadmin-shell[data-theme="light"] .text-blue-800 {
+  color: #1d4ed8 !important;
+}
+
+.labadmin-editor-surface {
+  background:
+    radial-gradient(circle at top left, rgba(250, 204, 21, 0.1), transparent 28%),
+    linear-gradient(180deg, color-mix(in srgb, var(--lab-surface) 95%, transparent), var(--lab-bg));
+}
+
+.labadmin-nav {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--lab-surface) 98%, transparent), color-mix(in srgb, var(--lab-surface-solid) 96%, transparent)) !important;
+}
+
+.labadmin-brand {
+  letter-spacing: 0.02em;
+}
+
+.labadmin-nav-link,
+.labadmin-nav-danger {
+  box-shadow: none !important;
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-nav {
+  border-color: rgba(148, 163, 184, 0.32) !important;
+  box-shadow: 0 16px 40px rgba(148, 163, 184, 0.14);
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-nav-link {
+  border-color: rgba(148, 163, 184, 0.42) !important;
+  background: rgba(255, 255, 255, 0.84);
+  color: #334155 !important;
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-nav-link:hover {
+  background: #eff6ff !important;
+  color: #0f172a !important;
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-nav-link.bg-yellow-400 {
+  background: linear-gradient(135deg, #f59e0b, #facc15) !important;
+  color: #111827 !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-nav-danger {
+  border-color: rgba(248, 113, 113, 0.35) !important;
+  background: rgba(255, 255, 255, 0.84);
+  color: #dc2626 !important;
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-nav-danger:hover {
+  background: #fef2f2 !important;
+}
+
+.labadmin-document {
+  background: white;
+  color: #111827;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
+}
+
+.labadmin-document [contenteditable="true"]:focus {
+  outline: none;
+}
+
+.labadmin-document-editable {
+  min-height: 320px;
+}
+
+.labadmin-cta,
+.labadmin-secondary-btn,
+.labadmin-editor-tab,
+.labadmin-agreement-action,
+.labadmin-agreement-action-success,
+.labadmin-agreement-action-danger,
+.labadmin-filter-chip {
+  box-shadow: none !important;
+}
+
+.labadmin-cta {
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  background: linear-gradient(135deg, #f59e0b, #facc15);
+  color: #111827 !important;
+  box-shadow: 0 18px 40px rgba(250, 204, 21, 0.22) !important;
+}
+
+.labadmin-cta:hover {
+  filter: brightness(1.03);
+}
+
+.labadmin-secondary-btn,
+.labadmin-editor-tab,
+.labadmin-agreement-action {
+  border: 1px solid var(--lab-border);
+  background: color-mix(in srgb, var(--lab-surface-solid) 88%, transparent);
+  color: var(--lab-text) !important;
+}
+
+.labadmin-secondary-btn:hover,
+.labadmin-editor-tab:hover,
+.labadmin-agreement-action:hover {
+  background: color-mix(in srgb, var(--lab-surface-soft) 85%, white 5%);
+  border-color: var(--lab-border-strong);
+}
+
+.labadmin-agreement-action-success {
+  border: 1px solid rgba(16, 185, 129, 0.32);
+  background: rgba(16, 185, 129, 0.1);
+  color: #6ee7b7 !important;
+}
+
+.labadmin-agreement-action-success:hover {
+  background: rgba(16, 185, 129, 0.16);
+}
+
+.labadmin-agreement-action-danger {
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  background: rgba(127, 29, 29, 0.08);
+  color: #fca5a5 !important;
+}
+
+.labadmin-agreement-action-danger:hover {
+  background: rgba(127, 29, 29, 0.16);
+}
+
+.labadmin-filter-chip {
+  border: 1px solid var(--lab-border);
+  background: color-mix(in srgb, var(--lab-surface-solid) 88%, transparent);
+  color: var(--lab-text) !important;
+}
+
+.labadmin-filter-chip:hover {
+  background: color-mix(in srgb, var(--lab-surface-soft) 85%, white 5%);
+  border-color: var(--lab-border-strong);
+}
+
+.labadmin-filter-chip-amber {
+  border-color: rgba(245, 158, 11, 0.38);
+  background: rgba(245, 158, 11, 0.14);
+  color: #fde68a !important;
+}
+
+.labadmin-filter-chip-amber:hover {
+  background: rgba(245, 158, 11, 0.22);
+}
+
+.labadmin-filter-chip-emerald {
+  border-color: rgba(16, 185, 129, 0.34);
+  background: rgba(16, 185, 129, 0.12);
+  color: #a7f3d0 !important;
+}
+
+.labadmin-filter-chip-emerald:hover {
+  background: rgba(16, 185, 129, 0.18);
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-secondary-btn,
+.labadmin-shell[data-theme="light"] .labadmin-editor-tab,
+.labadmin-shell[data-theme="light"] .labadmin-agreement-action {
+  background: rgba(255, 255, 255, 0.96);
+  color: #0f172a !important;
+  border-color: rgba(148, 163, 184, 0.42);
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-secondary-btn:hover,
+.labadmin-shell[data-theme="light"] .labadmin-editor-tab:hover,
+.labadmin-shell[data-theme="light"] .labadmin-agreement-action:hover {
+  background: #f8fafc;
+  border-color: rgba(100, 116, 139, 0.34);
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-agreement-action-success {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.28);
+  color: #047857 !important;
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-agreement-action-danger {
+  background: rgba(248, 113, 113, 0.08);
+  border-color: rgba(248, 113, 113, 0.28);
+  color: #dc2626 !important;
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-filter-chip {
+  background: rgba(255, 255, 255, 0.96);
+  color: #0f172a !important;
+  border-color: rgba(148, 163, 184, 0.42);
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-filter-chip:hover {
+  background: #f8fafc;
+  border-color: rgba(100, 116, 139, 0.34);
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-filter-chip-amber {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.32);
+  color: #b45309 !important;
+}
+
+.labadmin-shell[data-theme="light"] .labadmin-filter-chip-emerald {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.28);
+  color: #047857 !important;
+}
+
+.labadmin-shell[data-theme="light"] button[class*="bg-gray-800"],
+.labadmin-shell[data-theme="light"] button[class*="bg-gray-900"],
+.labadmin-shell[data-theme="light"] input[class*="bg-gray-800"],
+.labadmin-shell[data-theme="light"] input[class*="bg-gray-900"],
+.labadmin-shell[data-theme="light"] textarea[class*="bg-gray-800"],
+.labadmin-shell[data-theme="light"] textarea[class*="bg-gray-900"],
+.labadmin-shell[data-theme="light"] select[class*="bg-gray-800"],
+.labadmin-shell[data-theme="light"] select[class*="bg-gray-900"] {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  color: #0f172a !important;
+  border-color: rgba(148, 163, 184, 0.42) !important;
+}
+
+.labadmin-shell[data-theme="light"] button[class*="bg-gray-800"]:hover,
+.labadmin-shell[data-theme="light"] button[class*="bg-gray-900"]:hover {
+  background-color: #f8fafc !important;
+}
+
+.labadmin-shell[data-theme="light"] [data-radix-select-trigger],
+.labadmin-shell[data-theme="light"] [role="combobox"] {
+  background: rgba(255, 255, 255, 0.96) !important;
+  color: #0f172a !important;
+  border-color: rgba(148, 163, 184, 0.42) !important;
+}
+
+.labadmin-shell[data-theme="light"] [data-radix-popper-content-wrapper] [data-radix-select-content],
+.labadmin-shell[data-theme="light"] [data-radix-select-content] {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(148, 163, 184, 0.42) !important;
+}
+
+.labadmin-shell[data-theme="light"] input[type="file"]::file-selector-button {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.labadmin-shell[data-theme="light"] .text-amber-200 {
+  color: #b45309 !important;
+}
+
+.labadmin-shell[data-theme="light"] .text-emerald-200 {
+  color: #047857 !important;
+}
+
+.labadmin-shell[data-theme="light"] .text-green-400 {
+  color: #047857 !important;
+}
+
+@media (max-width: 1023px) {
+  .labadmin-document-editable {
+    min-height: 280px;
+  }
+}

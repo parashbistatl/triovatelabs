@@ -2,11 +2,13 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Moon, Sun } from "lucide-react";
 import { signIn } from "next-auth/react";
+import { useLabAdminTheme } from "@/components/admin/LabAdminThemeProvider";
 
 export default function LabAdminLogin() {
   const router = useRouter();
+  const { theme, toggleTheme } = useLabAdminTheme();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,6 +40,14 @@ export default function LabAdminLogin() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-gray-950 p-4">
+      <button
+        type="button"
+        onClick={toggleTheme}
+        className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-xl border border-gray-700 bg-gray-900/90 px-3 py-2 text-sm text-gray-200 transition hover:bg-gray-800"
+      >
+        {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+        <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
+      </button>
       <div className="pointer-events-none absolute inset-0 opacity-30" style={{ backgroundImage: "radial-gradient(circle at 20% 20%, rgba(251,191,36,0.15), transparent 35%), radial-gradient(circle at 80% 80%, rgba(59,130,246,0.12), transparent 35%)" }} />
       <div className="relative w-full max-w-sm rounded-2xl border border-gray-800 bg-gray-900/95 p-8 shadow-2xl">
         <h1 className="text-2xl font-bold text-white">Lab Admin</h1>

@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
+import type { AgreementType } from "@/lib/types/agreement";
 import {
+  createAgreementTemplateDefaults,
   ensureTables,
   generateRandomSlug,
   normalizeAgreement,
-  renderAgreementHtml,
   sql,
 } from "@/lib/server/content-api";
+import { hashAgreementPassword } from "@/lib/server/agreement-security";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -26,10 +28,21 @@ export async function POST(request: Request) {
     const payload = await request.json();
     const type = String(payload.type || "").trim();
     const title = String(payload.title || "").trim();
-    const variables = payload.variables || {};
+    const currencyCode = String(payload.currencyCode || "NPR").trim().toUpperCase() || "NPR";
+    const variables = {
+      ...createAgreementTemplateDefaults(type as AgreementType, currencyCode),
+      ...(payload.variables || {}),
+    };
+    const documentHtml = payload.documentHtml ? String(payload.documentHtml) : null;
+    const password = String(payload.password || "").trim();
+    const expiresAt = payload.expiresAt ? new Date(String(payload.expiresAt)) : null;
 
-    if (!type || !title) {
-      return NextResponse.json({ error: "Type and title are required" }, { status: 400 });
+    if (!type || !title || !password) {
+      return NextResponse.json({ error: "Type, title, and password are required" }, { status: 400 });
+    }
+
+    if (expiresAt && Number.isNaN(expiresAt.getTime())) {
+      return NextResponse.json({ error: "Invalid expiry date" }, { status: 400 });
     }
 
     let slug = "";
@@ -46,8 +59,30 @@ export async function POST(request: Request) {
     }
 
     const rows = await sql`
-      INSERT INTO site_agreements (slug, type, title, variables, created_at, updated_at)
-      VALUES (${slug}, ${type}, ${title}, ${JSON.stringify(variables)}, NOW(), NOW())
+      INSERT INTO site_agreements (
+        slug,
+        type,
+        title,
+        variables,
+        document_html,
+        password_hash,
+        currency_code,
+        expires_at,
+        created_at,
+        updated_at
+      )
+      VALUES (
+        ${slug},
+        ${type},
+        ${title},
+        ${JSON.stringify(variables)},
+        ${documentHtml},
+        ${hashAgreementPassword(password)},
+        ${currencyCode},
+        ${expiresAt ? expiresAt.toISOString() : null},
+        NOW(),
+        NOW()
+      )
       RETURNING *
     `;
 

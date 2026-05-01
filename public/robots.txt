@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /labadmin/
+Disallow: /agreements/view/
 
 Sitemap: https://triovatelabs.com/sitemap.xml
 

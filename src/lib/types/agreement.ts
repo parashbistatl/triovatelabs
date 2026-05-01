@@ -13,6 +13,14 @@ export interface Agreement {
   type: AgreementType;
   title: string;
   variables: AgreementVariables;
+  documentHtml?: string | null;
+  currencyCode: string;
+  expiresAt?: string | null;
+  passwordProtected: boolean;
+  signedAt?: string | null;
+  signerIp?: string | null;
+  signerName?: string | null;
+  signatureData?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -21,11 +29,19 @@ export interface CreateAgreementPayload {
   type: AgreementType;
   title: string;
   variables: AgreementVariables;
+  documentHtml?: string;
+  password?: string;
+  currencyCode?: string;
+  expiresAt?: string | null;
 }
 
 export interface UpdateAgreementPayload {
   title?: string;
   variables?: AgreementVariables;
+  documentHtml?: string;
+  password?: string;
+  currencyCode?: string;
+  expiresAt?: string | null;
 }
 
 export interface TemplateVariableConfig {
@@ -54,10 +70,10 @@ export const AGREEMENT_TEMPLATES: Record<AgreementType, TemplateConfig> = {
       { key: "CLIENT_SHORT_NAME", label: "Client Short Name" },
       { key: "CLIENT_LOCATION", label: "Client Location" },
       { key: "CLIENT_INDUSTRY", label: "Client Industry" },
-      { key: "YOU_PAY", label: "You Pay (GBP)" },
-      { key: "TOTAL_VALUE", label: "Total Value (GBP)" },
-      { key: "PAYMENT_INSTALLMENT", label: "Payment Installment (GBP)" },
-      { key: "INCLUDED_VALUE", label: "Included Value (GBP)" },
+      { key: "YOU_PAY", label: "You Pay (NPR)" },
+      { key: "TOTAL_VALUE", label: "Total Value (NPR)" },
+      { key: "PAYMENT_INSTALLMENT", label: "Payment Installment (NPR)" },
+      { key: "INCLUDED_VALUE", label: "Included Value (NPR)" },
     ],
   },
   digital_starter_agreement: {
@@ -68,8 +84,8 @@ export const AGREEMENT_TEMPLATES: Record<AgreementType, TemplateConfig> = {
       { key: "CLIENT_NAME", label: "Client Name" },
       { key: "REF_NUMBER", label: "Reference Number", placeholder: "e.g. DSA-2025-001" },
       { key: "DATE", label: "Date", placeholder: "e.g. 21 April 2025" },
-      { key: "SERVICE_PRICE", label: "Service Price (GBP)" },
-      { key: "PRICE_IN_WORDS", label: "Price in Words", placeholder: "e.g. Five Hundred Pounds Only" },
+      { key: "SERVICE_PRICE", label: "Service Price (NPR)" },
+      { key: "PRICE_IN_WORDS", label: "Price in Words", placeholder: "e.g. Fifty Thousand Nepali Rupees Only" },
     ],
   },
   digital_marketing_proposal: {
@@ -80,16 +96,16 @@ export const AGREEMENT_TEMPLATES: Record<AgreementType, TemplateConfig> = {
       { key: "CLIENT_NAME", label: "Client Name" },
       { key: "DATE", label: "Date", placeholder: "e.g. 21 April 2025" },
       { key: "TARGET_LOCATION", label: "Target Location" },
-      { key: "SOCIAL_MGMT_FEE", label: "Social Management Fee (GBP)" },
-      { key: "ADS_MGMT_FEE", label: "Ads Management Fee (GBP)" },
-      { key: "BONUS_1_VALUE", label: "Bonus 1 Value (strikethrough price) (GBP)" },
-      { key: "BONUS_2_VALUE", label: "Bonus 2 Value (strikethrough price) (GBP)" },
-      { key: "BONUS_3_VALUE", label: "Bonus 3 Value (strikethrough price) (GBP)" },
-      { key: "MONTH_1_TOTAL", label: "Month 1 Total (first payment) (GBP)" },
-      { key: "MONTHLY_RETAINER", label: "Monthly Retainer (GBP)" },
-      { key: "ONBOARDING_FEE", label: "Onboarding Fee (GBP)" },
-      { key: "SOCIAL_SETUP_FEE", label: "Social Setup Fee (GBP)" },
-      { key: "MIN_AD_SPEND", label: "Minimum Ad Spend (GBP)" },
+      { key: "SOCIAL_MGMT_FEE", label: "Social Management Fee (NPR)" },
+      { key: "ADS_MGMT_FEE", label: "Ads Management Fee (NPR)" },
+      { key: "BONUS_1_VALUE", label: "Bonus 1 Value (strikethrough price) (NPR)" },
+      { key: "BONUS_2_VALUE", label: "Bonus 2 Value (strikethrough price) (NPR)" },
+      { key: "BONUS_3_VALUE", label: "Bonus 3 Value (strikethrough price) (NPR)" },
+      { key: "MONTH_1_TOTAL", label: "Month 1 Total (first payment) (NPR)" },
+      { key: "MONTHLY_RETAINER", label: "Monthly Retainer (NPR)" },
+      { key: "ONBOARDING_FEE", label: "Onboarding Fee (NPR)" },
+      { key: "SOCIAL_SETUP_FEE", label: "Social Setup Fee (NPR)" },
+      { key: "MIN_AD_SPEND", label: "Minimum Ad Spend (NPR)" },
     ],
   },
 };

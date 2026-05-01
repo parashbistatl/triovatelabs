@@ -438,13 +438,13 @@ Code block
               </p>
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
-              <button type="button" onClick={applyDraftReviewPreset} className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-xs text-amber-200 hover:bg-amber-500/20">
+              <button type="button" onClick={applyDraftReviewPreset} className="labadmin-filter-chip labadmin-filter-chip-amber rounded-full px-3 py-1 text-xs">
                 Draft Review
               </button>
-              <button type="button" onClick={applyPublishedLibraryPreset} className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-200 hover:bg-emerald-500/20">
+              <button type="button" onClick={applyPublishedLibraryPreset} className="labadmin-filter-chip labadmin-filter-chip-emerald rounded-full px-3 py-1 text-xs">
                 Published Library
               </button>
-              <button type="button" onClick={clearListControls} className="rounded-full border border-gray-700 bg-gray-900 px-3 py-1 text-xs text-gray-300 hover:bg-gray-800">
+              <button type="button" onClick={clearListControls} className="labadmin-filter-chip rounded-full px-3 py-1 text-xs">
                 Clear All
               </button>
             </div>

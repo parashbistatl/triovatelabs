@@ -24,7 +24,9 @@ export default function ConditionalNavigation() {
     pathname.startsWith("/blogs/") ||
     pathname.startsWith("/resources/");
 
-  const isAgreementPage = /^\/[a-z0-9-]{8,}$/i.test(pathname) && !isKnownFrontendRoute;
+  const isAgreementPage =
+    pathname.startsWith("/agreements/view/") ||
+    (/^\/[a-z0-9-]{8,}$/i.test(pathname) && !isKnownFrontendRoute);
 
   if (isAdminLoginRoute) return null;
   if (isAdminRoute) return <AdminNavigation />;
