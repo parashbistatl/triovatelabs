@@ -276,6 +276,23 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
     bodyMarkup: "",
   });
 
+  const syncAgreements = useCallback(async () => {
+    const response = await fetch("/api/admin/agreements", { cache: "no-store" });
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to refresh agreements");
+    }
+
+    setAgreements(Array.isArray(data) ? (data as Agreement[]) : []);
+  }, []);
+
+  useEffect(() => {
+    syncAgreements().catch(() => {
+      // Keep server-rendered data if the background refresh fails.
+    });
+  }, [syncAgreements]);
+
   const previewHtml = useMemo(
     () => buildHtmlDocument(editor.styleMarkup, editor.bodyMarkup, editor.title || "Agreement Preview"),
     [editor.bodyMarkup, editor.styleMarkup, editor.title],
@@ -491,8 +508,11 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
 
     try {
       const response = await fetch(`/api/admin/agreements/${id}`, { method: "DELETE" });
-      if (!response.ok) throw new Error("Failed to delete agreement");
-      setAgreements((current) => current.filter((agreement) => agreement.id !== id));
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to delete agreement");
+      }
+      await syncAgreements();
       toast.success("Agreement deleted");
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to delete agreement");
@@ -583,12 +603,7 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
       }
 
       const savedAgreement = data as Agreement;
-      setAgreements((current) => {
-        if (editor.id) {
-          return current.map((agreement) => (agreement.id === savedAgreement.id ? savedAgreement : agreement));
-        }
-        return [savedAgreement, ...current];
-      });
+      await syncAgreements();
       toast.success(editor.id ? "Agreement updated" : "Agreement created");
       resetEditor();
     } catch (error) {
