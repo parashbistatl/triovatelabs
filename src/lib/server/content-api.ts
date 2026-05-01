@@ -5,7 +5,7 @@ import { randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { UTApi, UTFile } from "uploadthing/server";
-import type { Agreement, AgreementType } from "@/lib/types/agreement";
+import type { Agreement, AgreementType, AgreementVariables } from "@/lib/types/agreement";
 import { generateSecureAgreementSlug } from "@/lib/server/agreement-security";
 
 const sql = neon(process.env.DATABASE_URL!);
@@ -225,6 +225,17 @@ function toIsoTimestamp(value: unknown) {
   return date.toISOString();
 }
 
+function normalizeAgreementVariables(value: unknown): AgreementVariables {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return {};
+  }
+
+  return Object.entries(value as Record<string, unknown>).reduce<AgreementVariables>((accumulator, [key, entry]) => {
+    accumulator[key] = typeof entry === "string" ? entry : String(entry ?? "");
+    return accumulator;
+  }, {});
+}
+
 export function normalizeBlog(row: BlogRow | Record<string, unknown>) {
   return {
     id: String(row.id),
@@ -266,7 +277,7 @@ export function normalizeAgreement(row: AgreementRow | Record<string, unknown>) 
     slug: String(row.slug),
     type: agreementType,
     title: String(row.title),
-    variables: row.variables || {},
+    variables: normalizeAgreementVariables(row.variables),
     documentHtml: row.document_html ? String(row.document_html) : null,
     currencyCode: String(row.currency_code || "NPR").toUpperCase(),
     expiresAt: toIsoTimestamp(row.expires_at) ?? null,
