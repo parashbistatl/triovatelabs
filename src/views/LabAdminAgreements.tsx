@@ -634,7 +634,7 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
         </div>
 
         {showCreateForm ? (
-          <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 p-3 backdrop-blur md:p-6">
+          <div className="fixed inset-0 z-[100100] overflow-y-auto bg-slate-950/75 p-3 backdrop-blur md:p-6">
             <div className="mx-auto flex min-h-full w-full max-w-4xl items-center justify-center">
               <div className="w-full overflow-hidden rounded-[28px] border border-gray-800 bg-gray-950 md:rounded-[32px]">
                 <div className="border-b border-gray-800 px-4 py-4 md:px-6">
@@ -784,7 +784,7 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
         ) : null}
 
         {showEditor ? (
-          <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/75 p-3 backdrop-blur md:p-6">
+          <div className="fixed inset-0 z-[100100] overflow-y-auto bg-slate-950/75 p-3 backdrop-blur md:p-6">
             <div className="labadmin-editor-surface flex min-h-full flex-col overflow-hidden rounded-[32px] border border-gray-800">
               <div className="flex flex-col gap-4 border-b border-gray-800 px-4 py-4 md:px-6 lg:flex-row lg:items-center lg:justify-between">
                 <div className="min-w-0 flex-1">
