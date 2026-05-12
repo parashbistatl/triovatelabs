@@ -1081,7 +1081,7 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
                     <h2 className="mt-2 text-lg font-semibold text-white">{agreement.title}</h2>
                   </div>
                   <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-800">
-                    {agreement.signedAt ? "Signed" : "Pending"}
+                    {isProposalType(agreement.type) ? "Proposal" : agreement.signedAt ? "Signed" : "Pending"}
                   </span>
                 </div>
 
