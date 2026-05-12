@@ -30,6 +30,7 @@ type AgreementPageProps = {
 
 const DOCUMENT_BASE_WIDTH = 920;
 const DOCUMENT_FALLBACK_HEIGHT = 120;
+const PROPOSAL_TYPES = new Set(["website_proposal", "digital_marketing_proposal"]);
 const EMBEDDED_DOCUMENT_STYLE_OVERRIDES = `
   body {
     background: transparent !important;
@@ -162,6 +163,8 @@ export default function AgreementPage({ slug }: AgreementPageProps) {
     () => (agreement?.html ? extractDocumentBody(agreement.html) : { styles: "", body: "" }),
     [agreement?.html],
   );
+  const isProposal = agreement ? PROPOSAL_TYPES.has(agreement.type) : false;
+  const documentLabel = isProposal ? "Proposal" : "Agreement";
 
   const documentViewportRef = useRef<HTMLDivElement | null>(null);
   const documentContentRef = useRef<HTMLDivElement | null>(null);
@@ -355,7 +358,7 @@ export default function AgreementPage({ slug }: AgreementPageProps) {
           <p className="text-xs font-semibold uppercase tracking-[0.28em] text-amber-300">Protected Document</p>
           <h1 className="mt-3 text-2xl font-semibold">{gateTitle}</h1>
           <p className="mt-3 text-sm leading-6 text-slate-300">
-            Enter the password shared with you to view and sign this agreement.
+            Enter the password shared with you to view this document.
           </p>
 
           <form onSubmit={handlePasswordSubmit} className="mt-6 space-y-4">
@@ -385,10 +388,12 @@ export default function AgreementPage({ slug }: AgreementPageProps) {
       <div className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur print:hidden">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-3 py-3 sm:gap-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="min-w-0">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Agreement</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">{documentLabel}</p>
             <h1 className="break-words text-sm font-semibold sm:text-base">{agreement.title}</h1>
             <p className="mt-1 text-xs text-slate-500">
-              {agreement.signedAt
+              {isProposal
+                ? "Review this proposal and contact us to move forward"
+                : agreement.signedAt
                 ? `Completed by ${agreement.signerName || "Signer"}`
                 : "Review and sign to complete this agreement"}
             </p>
@@ -447,13 +452,12 @@ export default function AgreementPage({ slug }: AgreementPageProps) {
           </div>
         </section>
 
+        {!isProposal ? (
         <aside className="space-y-4 print:hidden sm:space-y-6">
           <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_24px_60px_rgba(15,23,42,0.08)] sm:p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-600">
-              {agreement.signedAt ? "Document Completed" : "Signature Required"}
-            </p>
             {agreement.signedAt ? (
               <div className="mt-4 space-y-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-600">Document Completed</p>
                 <div className="rounded-2xl bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
                   Signed on {new Date(agreement.signedAt).toLocaleString()}
                 </div>
@@ -522,10 +526,14 @@ export default function AgreementPage({ slug }: AgreementPageProps) {
                   <PenLine size={16} />
                   {signing ? "Saving Signature..." : "Sign Agreement"}
                 </button>
+                <p className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs font-medium leading-5 text-slate-600">
+                  By signing this agreement, you are legally bound by the terms and conditions stated above. Please read carefully before signing.
+                </p>
               </form>
             )}
           </div>
         </aside>
+        ) : null}
       </main>
     </div>
   );

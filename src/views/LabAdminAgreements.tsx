@@ -40,6 +40,9 @@ const TYPE_LABELS: Record<AgreementType, string> = {
   digital_marketing_proposal: "Digital Marketing Proposal",
 };
 
+const isProposalType = (type: AgreementType) =>
+  type === "website_proposal" || type === "digital_marketing_proposal";
+
 type LabAdminAgreementsProps = {
   initialAgreements?: Agreement[];
 };
@@ -1130,14 +1133,14 @@ export default function LabAdminAgreements({ initialAgreements = [] }: LabAdminA
                     className="labadmin-agreement-action inline-flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm sm:w-auto"
                   >
                     <ExternalLink className="h-4 w-4" />
-                    View
+                    {isProposalType(agreement.type) ? "View Proposal" : "View Agreement"}
                   </a>
                   <button
                     onClick={() => void openEditEditor(agreement)}
                     className="labadmin-agreement-action inline-flex w-full items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm sm:w-auto"
                   >
                     <FilePenLine className="h-4 w-4" />
-                    Edit
+                    {isProposalType(agreement.type) ? "Edit Proposal" : "Edit Agreement"}
                   </button>
                   <button
                     onClick={() => void handleDelete(agreement.id)}
